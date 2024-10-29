@@ -1,6 +1,7 @@
 package com.example.kick.domain.auth;
 
 import com.example.kick.domain.auth.dto.TokenResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -17,11 +18,13 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @Operation(summary = "회원가입")
     @PostMapping
     public TokenResponse signUp(@RequestBody @Valid String nickname, String password) {
         return authService.signUp(nickname, password);
     }
 
+    @Operation(summary = "로그인")
     @PostMapping("/signin")
     public TokenResponse userSignIn(@RequestBody @Valid String nickname, String password) {
         return authService.signIn(nickname, password);

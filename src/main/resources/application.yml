@@ -21,3 +21,11 @@ jwt:
   access-exp: 12000
   header: Authorization
   prefix: Bearer
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+    display-request-duration: true
+    operationsSorter: path
