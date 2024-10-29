@@ -3,8 +3,6 @@ package com.example.kick.global.security.jwt;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.Base64;
-
 @Getter
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
