@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class SignUpRequest {
@@ -16,7 +18,7 @@ public class SignUpRequest {
     @NotBlank
     private String password;
 
-    private Allergy allergy;
+    private List<Allergy> allergy;
 
     private EatingStyle eatingStyle;
 

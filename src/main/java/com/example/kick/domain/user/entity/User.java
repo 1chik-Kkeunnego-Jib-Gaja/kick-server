@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,17 +31,14 @@ public class User {
 
     private String password;
 
-    private Allergy allergy;
-
     private EatingStyle eatingStyle;
 
     private String goal;
 
     @Builder
-    public User(String nickname, String password, Allergy allergy, EatingStyle eatingStyle, String goal) {
+    public User(String nickname, String password, EatingStyle eatingStyle, String goal) {
         this.nickname = nickname;
         this.password = password;
-        this.allergy = allergy;
         this.eatingStyle = eatingStyle;
         this.goal = goal;
     }
