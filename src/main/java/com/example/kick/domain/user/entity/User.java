@@ -1,5 +1,7 @@
-package com.example.kick.domain.user;
+package com.example.kick.domain.user.entity;
 
+import com.example.kick.domain.user.entity.type.Allergy;
+import com.example.kick.domain.user.entity.type.EatingStyle;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,9 +32,18 @@ public class User {
 
     private String password;
 
+    private Allergy allergy;
+
+    private EatingStyle eatingStyle;
+
+    private String goal;
+
     @Builder
-    public User(String nickname, String password) {
+    public User(String nickname, String password, Allergy allergy, EatingStyle eatingStyle, String goal) {
         this.nickname = nickname;
         this.password = password;
+        this.allergy = allergy;
+        this.eatingStyle = eatingStyle;
+        this.goal = goal;
     }
 }

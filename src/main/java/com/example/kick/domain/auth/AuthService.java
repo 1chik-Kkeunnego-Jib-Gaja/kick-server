@@ -1,7 +1,9 @@
 package com.example.kick.domain.auth;
 
+import com.example.kick.domain.auth.dto.SignInRequest;
+import com.example.kick.domain.auth.dto.SignUpRequest;
 import com.example.kick.domain.auth.dto.TokenResponse;
-import com.example.kick.domain.user.User;
+import com.example.kick.domain.user.entity.User;
 import com.example.kick.domain.user.UserRepository;
 import com.example.kick.global.security.jwt.JwtTokenProvider;
 import jakarta.transaction.Transactional;
@@ -16,8 +18,8 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public TokenResponse signIn(String nickname, String password) {
-        User user = userRepository.findByNickname(nickname)
+    public TokenResponse signIn(SignInRequest dto) {
+        User user = userRepository.findByNickname(dto.getNickname())
             .orElseThrow(() -> new IllegalArgumentException("user not found"));
 
         String accessToken = jwtTokenProvider.generateAccessToken(user.getNickname());
@@ -28,10 +30,13 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenResponse signUp(String nickname, String password) {
+    public TokenResponse signUp(SignUpRequest dto) {
         User user = userRepository.save(User.builder()
-            .nickname(nickname)
-            .password(password)
+                .nickname(dto.getNickname())
+                .password(dto.getPassword())
+                .eatingStyle(dto.getEatingStyle())
+                .allergy(dto.getAllergy())
+                .goal(dto.getGoal())
             .build());
 
         String accessToken = jwtTokenProvider.generateAccessToken(user.getNickname());

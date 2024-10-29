@@ -1,6 +1,7 @@
 package com.example.kick.domain.user;
 
 import com.example.kick.domain.user.dto.UserProfileResponse;
+import com.example.kick.domain.user.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 

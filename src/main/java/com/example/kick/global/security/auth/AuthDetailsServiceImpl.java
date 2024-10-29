@@ -1,6 +1,6 @@
 package com.example.kick.global.security.auth;
 
-import com.example.kick.domain.user.User;
+import com.example.kick.domain.user.entity.User;
 import com.example.kick.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

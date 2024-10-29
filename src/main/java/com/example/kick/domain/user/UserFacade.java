@@ -1,5 +1,6 @@
 package com.example.kick.domain.user;
 
+import com.example.kick.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
