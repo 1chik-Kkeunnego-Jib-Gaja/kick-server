@@ -94,6 +94,7 @@ public class CombinationService {
             .recipe(combination.getRecipe())
             .imageUrl(combination.getImageUrl())
             .userId(user.getId())
+            .likeCount(combination.getLikeCount())
             .tags(combination.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
             .build();
     }
