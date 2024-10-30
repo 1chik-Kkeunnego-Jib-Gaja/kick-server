@@ -1,7 +1,7 @@
 package com.example.kick.domain.combination;
 
 import com.example.kick.domain.combination.dto.CombinationRequest;
-import com.example.kick.domain.user.User;
+import com.example.kick.domain.user.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

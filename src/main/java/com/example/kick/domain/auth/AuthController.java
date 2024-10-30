@@ -22,13 +22,13 @@ public class AuthController {
 
     @Operation(summary = "회원가입")
     @PostMapping
-    public TokenResponse signUp(@RequestBody @Valid SignUpRequest request) {
-        return authService.signUp(request.getNickname(), request.getPassword());
+    public TokenResponse signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
+        return authService.signUp(signUpRequest);
     }
 
     @Operation(summary = "로그인")
     @PostMapping("/signin")
-    public TokenResponse userSignIn(@RequestBody @Valid SignInRequest request) {
-        return authService.signIn(request.getNickname(), request.getPassword());
+    public TokenResponse userSignIn(@RequestBody @Valid SignInRequest signInRequest) {
+        return authService.signIn(signInRequest);
     }
 }

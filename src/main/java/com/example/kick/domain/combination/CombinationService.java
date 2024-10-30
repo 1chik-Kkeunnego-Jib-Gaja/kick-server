@@ -4,7 +4,7 @@ import com.example.kick.domain.combination.dto.CombinationRequest;
 import com.example.kick.domain.combination.dto.CombinationResponse;
 import com.example.kick.domain.combination.dto.QueryCombinationDetailsResponse;
 import com.example.kick.domain.combination.dto.QueryCombinationListResponse;
-import com.example.kick.domain.user.User;
+import com.example.kick.domain.user.entity.User;
 import com.example.kick.domain.user.UserFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,7 @@
-package com.example.kick.domain.user;
+package com.example.kick.domain.user.entity;
 
+import com.example.kick.domain.user.entity.type.EatingStyle;
+import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,9 +31,16 @@ public class User {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private EatingStyle eatingStyle;
+
+    private String goal;
+
     @Builder
-    public User(String nickname, String password) {
+    public User(String nickname, String password, EatingStyle eatingStyle, String goal) {
         this.nickname = nickname;
         this.password = password;
+        this.eatingStyle = eatingStyle;
+        this.goal = goal;
     }
 }
