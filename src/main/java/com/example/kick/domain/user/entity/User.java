@@ -3,6 +3,7 @@ package com.example.kick.domain.user.entity;
 import com.example.kick.domain.user.entity.type.Allergy;
 import com.example.kick.domain.user.entity.type.EatingStyle;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import jakarta.persistence.*;
 =======
 import jakarta.persistence.Column;
@@ -12,6 +13,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 >>>>>>> b75d520 (fix allergy)
+=======
+import jakarta.persistence.*;
+>>>>>>> c6acc81 (Edti)
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,9 +40,13 @@ public class User {
     private String password;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @Enumerated(EnumType.STRING)
 =======
 >>>>>>> b75d520 (fix allergy)
+=======
+    @Enumerated(EnumType.STRING)
+>>>>>>> c6acc81 (Edti)
     private EatingStyle eatingStyle;
 
     private String goal;
