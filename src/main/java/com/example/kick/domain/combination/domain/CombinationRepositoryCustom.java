@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CombinationRepositoryCustom {
     List<Combination> findByExcludingAllergies(List<Allergy> allergies);
+
+    List<Combination> findByTags(List<String> tags);
 }
