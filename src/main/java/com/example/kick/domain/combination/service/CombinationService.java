@@ -8,6 +8,7 @@ import com.example.kick.domain.combination.presentation.dto.QueryCombinationList
 import com.example.kick.domain.combination.presentation.dto.UpdateCombinationRequest;
 import com.example.kick.domain.question.domain.Question;
 import com.example.kick.domain.question.domain.QuestionRepository;
+import com.example.kick.domain.review.presentation.dto.QueryReviewDetailResponse;
 import com.example.kick.domain.user.domain.User;
 import com.example.kick.domain.user.domain.UserAllergyRepository;
 import com.example.kick.domain.user.domain.type.Allergy;
@@ -88,6 +89,13 @@ public class CombinationService {
         Combination combination = combinationRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("combination not found"));
 
+        List<QueryReviewDetailResponse> reviews = combination.getReviews().stream()
+            .map(review -> QueryReviewDetailResponse.builder()
+                .content(review.getContent())
+                .userId(review.getUser().getId())
+                .build())
+            .collect(Collectors.toList());
+
         return QueryCombinationDetailsResponse.builder()
             .name(combination.getName())
             .ingredient(combination.getIngredient())
@@ -96,6 +104,7 @@ public class CombinationService {
             .userId(user.getId())
             .likeCount(combination.getLikeCount())
             .tags(combination.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+            .reviews(reviews)
             .build();
     }
 

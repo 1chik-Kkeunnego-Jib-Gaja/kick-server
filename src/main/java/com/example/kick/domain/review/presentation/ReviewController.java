@@ -5,6 +5,7 @@ import com.example.kick.domain.review.presentation.dto.ReviewResponse;
 import com.example.kick.domain.review.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,11 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @Operation(summary = "리뷰 작성")
-    @PostMapping
-    public ReviewResponse create(@RequestBody ReviewRequest request) {
-        return reviewService.create(request.getContent());
+    @PostMapping("/{combination-id}")
+    public ReviewResponse create(
+        @PathVariable("combination-id") Long combinationId,
+        @RequestBody ReviewRequest request
+    ) {
+        return reviewService.create(combinationId, request.getContent());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.kick.domain.review.domain;
 
+import com.example.kick.domain.combination.domain.Combination;
 import com.example.kick.domain.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,9 +31,14 @@ public class Review {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "combination_id")
+    private Combination combination;
+
     @Builder
-    public Review(String content, User user) {
+    public Review(String content, User user, Combination combination) {
         this.content = content;
         this.user = user;
+        this.combination = combination;
     }
 }
