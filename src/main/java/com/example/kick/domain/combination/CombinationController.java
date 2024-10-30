@@ -1,9 +1,10 @@
 package com.example.kick.domain.combination;
 
-import com.example.kick.domain.combination.dto.CombinationRequest;
+import com.example.kick.domain.combination.dto.CreateCombinationRequest;
 import com.example.kick.domain.combination.dto.CombinationResponse;
 import com.example.kick.domain.combination.dto.QueryCombinationDetailsResponse;
 import com.example.kick.domain.combination.dto.QueryCombinationListResponse;
+import com.example.kick.domain.combination.dto.UpdateCombinationRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class CombinationController {
 
     @Operation(summary = "조합 추가")
     @PostMapping
-    public CombinationResponse create(@RequestBody @Valid CombinationRequest request) {
+    public CombinationResponse create(@RequestBody @Valid CreateCombinationRequest request) {
         return combinationService.create(request);
     }
 
@@ -45,7 +46,7 @@ public class CombinationController {
     @PatchMapping("/{combination-id}")
     public CombinationResponse update(
         @PathVariable("combination-id") Long id,
-        @RequestBody @Valid CombinationRequest request) {
+        @RequestBody @Valid UpdateCombinationRequest request) {
         return combinationService.update(id, request);
     }
 

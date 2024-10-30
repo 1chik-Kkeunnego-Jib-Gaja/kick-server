@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QueryCombinationListResponse {
 
-    private final List<CombinationResponse> combinationiList;
+    private final List<CombinationResponse> combinationList;
 
     @Getter
     @Builder
@@ -18,5 +18,6 @@ public class QueryCombinationListResponse {
         private final Long id;
         private final String name;
         private final String imageUrl;
+        private final List<String> tags;
     }
 }

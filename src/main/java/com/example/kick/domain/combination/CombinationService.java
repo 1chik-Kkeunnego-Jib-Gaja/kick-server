@@ -1,14 +1,16 @@
 package com.example.kick.domain.combination;
 
-import com.example.kick.domain.combination.dto.CombinationRequest;
+import com.example.kick.domain.combination.dto.CreateCombinationRequest;
 import com.example.kick.domain.combination.dto.CombinationResponse;
 import com.example.kick.domain.combination.dto.QueryCombinationDetailsResponse;
 import com.example.kick.domain.combination.dto.QueryCombinationListResponse;
+import com.example.kick.domain.combination.dto.UpdateCombinationRequest;
 import com.example.kick.domain.user.entity.User;
 import com.example.kick.domain.user.UserFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.example.kick.domain.combination.tag.Tag;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +23,7 @@ public class CombinationService {
     private final CombinationRepository combinationRepository;
 
     @Transactional
-    public CombinationResponse create(CombinationRequest request) {
+    public CombinationResponse create(CreateCombinationRequest request) {
         User user = userFacade.getCurrentUser();
 
         Combination combination = Combination.builder()
@@ -32,13 +34,17 @@ public class CombinationService {
             .user(user)
             .build();
 
+        if (request.getTags() != null) {
+            combination.addTags(request.getTags());
+        }
+
         combinationRepository.save(combination);
 
         return new CombinationResponse(combination.getId());
     }
 
     @Transactional
-    public CombinationResponse update(Long id, CombinationRequest request) {
+    public CombinationResponse update(Long id, UpdateCombinationRequest request) {
         Combination combination = combinationRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("combination not found"));
 
@@ -67,6 +73,7 @@ public class CombinationService {
             .recipe(combination.getRecipe())
             .imageUrl(combination.getImageUrl())
             .userId(user.getId())
+            .tags(combination.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
             .build();
     }
 
@@ -81,6 +88,7 @@ public class CombinationService {
                 .id(combination.getId())
                 .name(combination.getName())
                 .imageUrl(combination.getImageUrl())
+                .tags(combination.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
                 .build())
             .collect(Collectors.toList());
 
