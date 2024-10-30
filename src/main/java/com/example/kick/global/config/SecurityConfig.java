@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsUtils;
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final CorsConfig corsConfig;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,7 +39,9 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/index.html").permitAll()
 
                 .anyRequest().authenticated())
-            .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+            .addFilter(corsConfig.corsFilter());
+
 
         return http.build();
     }
