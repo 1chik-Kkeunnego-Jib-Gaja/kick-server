@@ -15,4 +15,5 @@ public class QueryCombinationDetailsResponse {
     private final String imageUrl;
     private final Long userId;
     private final List<String> tags;
+    private final long likeCount;
 }
