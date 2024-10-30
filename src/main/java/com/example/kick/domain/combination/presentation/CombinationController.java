@@ -38,7 +38,7 @@ public class CombinationController {
         return combinationService.queryDetail(combinationId);
     }
 
-    @Operation(summary = "test")
+    @Operation(summary = "조합 이름 검색")
     @GetMapping("/search")
     public QueryCombinationListResponse queryCombinationByName(@RequestParam("query") String query) {
         return combinationService.queryCombinationByName(query);
