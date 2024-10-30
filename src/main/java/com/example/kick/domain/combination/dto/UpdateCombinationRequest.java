@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CombinationRequest {
+public class UpdateCombinationRequest {
 
     @NotBlank
     private String name;
