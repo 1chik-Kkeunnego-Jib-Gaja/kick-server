@@ -31,6 +31,7 @@ public class CombinationRepositoryCustomImpl implements CombinationRepositoryCus
                         .and(tag.name.in(allergyNames)))
                     .notExists()
             )
+            .orderBy(combination.likes.size().desc())
             .fetch();
     }
 

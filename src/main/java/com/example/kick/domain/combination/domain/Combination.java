@@ -47,6 +47,9 @@ public class Combination {
     @OneToMany(mappedBy = "combination", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "combination", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CombinationLike> likes = new ArrayList<>();
+
     @Builder
     public Combination(String name, String ingredient, String recipe, String imageUrl, User user, List<Tag> tags) {
         this.name = name;
@@ -74,6 +77,10 @@ public class Combination {
                 .build();
             this.tags.add(tag);
         }
+    }
+
+    public long getLikeCount() {
+        return likes.size();
     }
 }
 

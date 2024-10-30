@@ -25,5 +25,4 @@ public class CombinationLike {
         this.combination = combination;
         this.user = user;
     }
-
 }

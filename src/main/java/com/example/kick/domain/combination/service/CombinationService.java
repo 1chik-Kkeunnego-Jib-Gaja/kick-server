@@ -112,11 +112,13 @@ public class CombinationService {
                 .name(combination.getName())
                 .imageUrl(combination.getImageUrl())
                 .tags(combination.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .likeCount(combination.getLikeCount())
                 .build())
             .collect(Collectors.toList());
 
         return new QueryCombinationListResponse(combinationResponseList);
     }
+
 
     @Transactional
     public List<Combination> recommend(Map<String, Boolean> userResponses) {
@@ -130,5 +132,4 @@ public class CombinationService {
 
         return combinationRepository.findByTags(likedTags);
     }
-
 }

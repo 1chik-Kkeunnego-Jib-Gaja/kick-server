@@ -19,5 +19,6 @@ public class QueryCombinationListResponse {
         private final String name;
         private final String imageUrl;
         private final List<String> tags;
+        private final long likeCount;
     }
 }
