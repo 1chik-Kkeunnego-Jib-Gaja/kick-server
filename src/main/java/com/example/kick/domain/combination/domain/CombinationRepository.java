@@ -12,5 +12,5 @@ public interface CombinationRepository extends JpaRepository<Combination, Long>,
     @Query("SELECT c FROM Combination c JOIN c.tags t WHERE t.name IN :tags")
     List<Combination> findByTags(@Param("tags") List<String> tags);
 
-    List<Combination> findByUserId(Long userId);
+    List<Combination> findByName(String name);
 }
