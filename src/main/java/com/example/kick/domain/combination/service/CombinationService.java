@@ -1,7 +1,6 @@
 package com.example.kick.domain.combination.service;
 
-import com.example.kick.domain.combination.domain.Combination;
-import com.example.kick.domain.combination.domain.CombinationRepository;
+import com.example.kick.domain.combination.domain.*;
 import com.example.kick.domain.combination.presentation.dto.CreateCombinationRequest;
 import com.example.kick.domain.combination.presentation.dto.CombinationResponse;
 import com.example.kick.domain.combination.presentation.dto.QueryCombinationDetailsResponse;
@@ -12,7 +11,6 @@ import com.example.kick.domain.user.facade.UserFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.kick.domain.combination.domain.Tag;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +21,7 @@ public class CombinationService {
 
     private final UserFacade userFacade;
     private final CombinationRepository combinationRepository;
+    private final CombinationLikeRepository combinationLikeRepository;
 
     @Transactional
     public CombinationResponse create(CreateCombinationRequest request) {
@@ -61,6 +60,18 @@ public class CombinationService {
             .orElseThrow(() -> new IllegalArgumentException("combination not found"));
 
         combinationRepository.delete(combination);
+    }
+
+    @Transactional
+    public void like(Long id) {
+        User user = userFacade.getCurrentUser();
+
+        CombinationLike combinationLike = new CombinationLike(
+                combinationRepository.findById(id)
+                .orElseThrow(IllegalArgumentException::new),
+                user
+        );
+        combinationLikeRepository.save(combinationLike);
     }
 
     @Transactional

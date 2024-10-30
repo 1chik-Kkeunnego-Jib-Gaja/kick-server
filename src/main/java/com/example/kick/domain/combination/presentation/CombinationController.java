@@ -9,6 +9,9 @@ import com.example.kick.domain.combination.presentation.dto.UpdateCombinationReq
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -55,5 +58,12 @@ public class CombinationController {
     @DeleteMapping("/{combination-id}")
     public void delete(@PathVariable("combination-id") Long id) {
         combinationService.delete(id);
+    }
+
+    @Operation(summary = "조합 좋아요")
+    @PostMapping("/like/{combination-id}")
+    public ResponseEntity<Void> like(@PathVariable("combination-id") Long id) {
+        combinationService.like(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
