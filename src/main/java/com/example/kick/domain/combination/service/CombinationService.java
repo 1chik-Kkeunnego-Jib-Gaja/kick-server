@@ -7,6 +7,8 @@ import com.example.kick.domain.combination.presentation.dto.QueryCombinationDeta
 import com.example.kick.domain.combination.presentation.dto.QueryCombinationListResponse;
 import com.example.kick.domain.combination.presentation.dto.UpdateCombinationRequest;
 import com.example.kick.domain.user.domain.User;
+import com.example.kick.domain.user.domain.UserAllergyRepository;
+import com.example.kick.domain.user.domain.type.Allergy;
 import com.example.kick.domain.user.facade.UserFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class CombinationService {
     private final UserFacade userFacade;
     private final CombinationRepository combinationRepository;
     private final CombinationLikeRepository combinationLikeRepository;
+    private final UserAllergyRepository userAllergyRepository;
 
     @Transactional
     public CombinationResponse create(CreateCombinationRequest request) {
@@ -94,7 +97,9 @@ public class CombinationService {
     public QueryCombinationListResponse queryList() {
         User user = userFacade.getCurrentUser();
 
-        List<Combination> combinations = combinationRepository.findByUserId(user.getId());
+        List<Allergy> userAllergies = userAllergyRepository.findAllergiesByUserId(user.getId());
+
+        List<Combination> combinations = combinationRepository.findByExcludingAllergies(userAllergies);
 
         List<QueryCombinationListResponse.CombinationResponse> combinationResponseList = combinations.stream()
             .map(combination -> QueryCombinationListResponse.CombinationResponse.builder()
