@@ -40,7 +40,7 @@ public class CombinationController {
 
     @Operation(summary = "test")
     @GetMapping("/search")
-    public List<QueryCombinationDetailsResponse> queryCombinationByName(@RequestParam("query") String query) {
+    public QueryCombinationListResponse queryCombinationByName(@RequestParam("query") String query) {
         return combinationService.queryCombinationByName(query);
     }
 

@@ -135,18 +135,25 @@ public class CombinationService {
     }
 
     @Transactional
-    public List<QueryCombinationDetailsResponse> queryCombinationByName(String name){
-        return combinationRepository.findByName(name).stream().map(
-                combination -> QueryCombinationDetailsResponse.builder()
+    public QueryCombinationListResponse queryCombinationByName(String name){
+        List<Combination> combinationList = combinationRepository.findByName(name);
+
+        List<QueryCombinationListResponse.CombinationResponse> responseList = combinationList.stream()
+                .map(combination -> QueryCombinationListResponse.CombinationResponse.builder()
+                        .id(combination.getId())
                         .name(combination.getName())
-                        .tags(combination.getTags().stream()
-                                .map(tag -> tag.getName()).toList())
-                        .recipe(combination.getRecipe())
-                        .likeCount(combination.getLikeCount())
-                        .userId(combination.getUser().getId())
-                        .ingredient(combination.getIngredient())
                         .imageUrl(combination.getImageUrl())
+                        .tags(
+                                combination.getTags().stream()
+                                        .map(tag -> tag.getName())
+                                        .collect(Collectors.toList())
+                        )
+                        .likeCount(combination.getLikeCount())
                         .build()
-        ).toList();
+                )
+                .collect(Collectors.toList());
+
+        return new QueryCombinationListResponse(responseList);
+
     }
 }
