@@ -6,6 +6,8 @@ import com.example.kick.domain.combination.presentation.dto.CombinationResponse;
 import com.example.kick.domain.combination.presentation.dto.QueryCombinationDetailsResponse;
 import com.example.kick.domain.combination.presentation.dto.QueryCombinationListResponse;
 import com.example.kick.domain.combination.presentation.dto.UpdateCombinationRequest;
+import com.example.kick.domain.question.domain.Question;
+import com.example.kick.domain.question.domain.QuestionRepository;
 import com.example.kick.domain.user.domain.User;
 import com.example.kick.domain.user.domain.UserAllergyRepository;
 import com.example.kick.domain.user.domain.type.Allergy;
@@ -15,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,6 +29,7 @@ public class CombinationService {
     private final CombinationRepository combinationRepository;
     private final CombinationLikeRepository combinationLikeRepository;
     private final UserAllergyRepository userAllergyRepository;
+    private final QuestionRepository questionRepository;
 
     @Transactional
     public CombinationResponse create(CreateCombinationRequest request) {
@@ -112,4 +117,18 @@ public class CombinationService {
 
         return new QueryCombinationListResponse(combinationResponseList);
     }
+
+    @Transactional
+    public List<Combination> recommend(Map<String, Boolean> userResponses) {
+        List<String> likedTags = userResponses.entrySet().stream()
+            .filter(Map.Entry::getValue)
+            .map(entry -> questionRepository.findByQuestion(entry.getKey())
+                .map(Question::getTagName)
+                .orElse(null))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+
+        return combinationRepository.findByTags(likedTags);
+    }
+
 }

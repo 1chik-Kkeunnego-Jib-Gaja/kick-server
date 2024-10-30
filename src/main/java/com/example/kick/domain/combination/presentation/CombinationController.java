@@ -1,15 +1,16 @@
 package com.example.kick.domain.combination.presentation;
 
-import com.example.kick.domain.combination.service.CombinationService;
-import com.example.kick.domain.combination.presentation.dto.CreateCombinationRequest;
+import com.example.kick.domain.combination.domain.Combination;
+import com.example.kick.domain.combination.domain.Tag;
 import com.example.kick.domain.combination.presentation.dto.CombinationResponse;
+import com.example.kick.domain.combination.presentation.dto.CreateCombinationRequest;
 import com.example.kick.domain.combination.presentation.dto.QueryCombinationDetailsResponse;
 import com.example.kick.domain.combination.presentation.dto.QueryCombinationListResponse;
 import com.example.kick.domain.combination.presentation.dto.UpdateCombinationRequest;
+import com.example.kick.domain.combination.service.CombinationService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RequestMapping("/combinations")
@@ -65,5 +70,22 @@ public class CombinationController {
     public ResponseEntity<Void> like(@PathVariable("combination-id") Long id) {
         combinationService.like(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "메뉴 추천받기")
+    @PostMapping("/recommend")
+    public ResponseEntity<QueryCombinationListResponse> getRecommendations(@RequestBody Map<String, Boolean> userResponses) {
+        List<Combination> combinations = combinationService.recommend(userResponses);
+        List<QueryCombinationListResponse.CombinationResponse> responses = combinations.stream()
+            .map(combination -> QueryCombinationListResponse.CombinationResponse.builder()
+                .id(combination.getId())
+                .name(combination.getName())
+                .imageUrl(combination.getImageUrl())
+                .tags(combination.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .build())
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new QueryCombinationListResponse(responses));
     }
 }

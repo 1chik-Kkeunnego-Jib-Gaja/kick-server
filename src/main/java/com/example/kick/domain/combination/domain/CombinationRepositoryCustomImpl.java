@@ -33,4 +33,13 @@ public class CombinationRepositoryCustomImpl implements CombinationRepositoryCus
             )
             .fetch();
     }
+
+    @Override
+    public List<Combination> findByTags(List<String> tags) {
+        return queryFactory
+            .selectFrom(combination)
+            .leftJoin(combination.tags, tag)
+            .where(tag.name.in(tags))
+            .fetch();
+    }
 }
