@@ -133,4 +133,20 @@ public class CombinationService {
 
         return combinationRepository.findByTags(likedTags);
     }
+
+    @Transactional
+    public List<QueryCombinationDetailsResponse> queryCombinationByName(String name){
+        return combinationRepository.findByName(name).stream().map(
+                combination -> QueryCombinationDetailsResponse.builder()
+                        .name(combination.getName())
+                        .tags(combination.getTags().stream()
+                                .map(tag -> tag.getName()).toList())
+                        .recipe(combination.getRecipe())
+                        .likeCount(combination.getLikeCount())
+                        .userId(combination.getUser().getId())
+                        .ingredient(combination.getIngredient())
+                        .imageUrl(combination.getImageUrl())
+                        .build()
+        ).toList();
+    }
 }

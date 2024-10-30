@@ -13,14 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -41,8 +34,14 @@ public class CombinationController {
 
     @Operation(summary = "조합 상세 조회")
     @GetMapping("/{combination-id}")
-    public QueryCombinationDetailsResponse queryDetail(@PathVariable("combination-id") Long combinationId) { // @PathVariable에 name 속성 사용
+    public QueryCombinationDetailsResponse queryDetail(@PathVariable(value = "combination-id", required = true) Long combinationId) { // @PathVariable에 name 속성 사용
         return combinationService.queryDetail(combinationId);
+    }
+
+    @Operation(summary = "test")
+    @GetMapping("/search")
+    public List<QueryCombinationDetailsResponse> queryCombinationByName(@RequestParam("query") String query) {
+        return combinationService.queryCombinationByName(query);
     }
 
     @Operation(summary = "조합 추가")
