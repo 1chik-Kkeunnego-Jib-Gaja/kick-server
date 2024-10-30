@@ -29,3 +29,13 @@ springdoc:
     path: /swagger-ui
     display-request-duration: true
     operationsSorter: path
+
+cloud:
+  aws:
+    region:
+      static: ${REGION:ap-northeast-2}
+    s3:
+      bucket: ${BUCKET:kickkick}
+    credentials:
+      access-key: ${S3_ACCESS_KEY:fda}
+      secret-key: ${S3_SECRET_KEY:daf}
